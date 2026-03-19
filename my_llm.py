@@ -9,8 +9,6 @@ from env_utils import DEEPSEEK_API_KEY, DEEPSEEK_BASE_URL
 #     model = "deepseek-chat",
 # )
 
-
-
 # 方法二：使用模型工厂类
 deepseek_llm = init_chat_model(
     model="deepseek-chat",
