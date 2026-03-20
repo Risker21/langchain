@@ -42,7 +42,7 @@ def get_stack_price(company: str, timeframe: str = "today") -> str:
 
 @tool
 def search_news(company: str) -> str:
-    """搜索关于特定公司的最新新闻。参数 company 是公司名称。"""
+    """搜索关于特定公司的最新新闻。参数 company 是公司名称。mock_news是一个模拟的新闻数据字典，包含了每个公司的最新新闻列表。函数根据输入的公司名称返回对应的新闻，如果没有找到相关信息，则返回一个提示消息。"""
     mock_news = {
         "AAPL": ["苹果公司发布了新的iPhone型号，预计将引起市场热潮。",
                  "苹果公司宣布了一项新的环保计划，致力于减少碳足迹。",
@@ -53,7 +53,7 @@ def search_news(company: str) -> str:
         "HUAWEI": ["华为推出了最新的5G手机，受到了消费者的广泛关注。",
                    "华为宣布了一项新的全球合作计划，旨在推动技术创新。"
                    "华为在智能家居领域取得了重大进展，预计将提升市场份额。"],
-        "XIAOMI": ["小米公司发布了新的智能家居产品线，预计将提升市场份额。",
+        "XIAOMI": ["小米公司发布了新的智能家居产品线，预计将提升市场份。",
                    "小米公司宣布了一项新的全球扩展计划，旨在进入更多国际市场。"
                    "小米在智能手机领域取得了重大突破，预计将提升市场竞争力。"]
 
@@ -66,7 +66,7 @@ def search_news(company: str) -> str:
 model_bind_tool = deepseek_llm.bind_tools([get_stack_price, search_news])
 
 messages = []
-human_message = HumanMessage(content="HUAWEI今天的股价是多少？")
+human_message = HumanMessage(content="请获取HUAWEI和XIAOMI的股价，并告知我这两家公司的最新新闻")
 messages.append(human_message)
 
 # 2.LLM返回调用工具的请求
@@ -84,8 +84,10 @@ while True:
                 messages.append(tool_result)
 
     else:
-        print("无工具调用")
+        # 如果没有工具调用，说明这就是最终答案
+        print("\n✨ --- 最终分析报告 --- ✨")
+        print(response.content)
         break # 如果没有工具调用，说明LLM已经生成了最终回复，可以退出循环
 
 print(f"messages：{messages}")
-print(response.tool_calls)
+# print(response.content)

@@ -25,3 +25,4 @@ model_with_structured_output = deepseek_llm.with_structured_output(json_schema)
 resp = model_with_structured_output.invoke("介绍‘送你一朵小红花’这一部电影")
 print(type(resp))
 print(resp)
+
